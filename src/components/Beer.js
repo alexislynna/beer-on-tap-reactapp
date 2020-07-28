@@ -11,6 +11,10 @@ class Beer extends Component {
     state = { beers: [], brand: "brand", type: "type", id: 0 }
 
     componentDidMount() {
+        this.getList()
+    }
+
+    getList() {
         fetch('https://beer-on-tap-36284.herokuapp.com/beerdata')
             .then(res => res.json())
             .then((data) => {
@@ -62,8 +66,8 @@ class Beer extends Component {
         var type = this.state.type;
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "Basic dGVzdHVzZXI6dGVzdHBhc3N3b3Jk");
-        myHeaders.append("Cookie", "JSESSIONID=C3C579873A1FF3A29B2414E96492CAC0");
+        //myHeaders.append("Authorization", "Basic dGVzdHVzZXI6dGVzdHBhc3N3b3Jk");
+        //myHeaders.append("Cookie", "JSESSIONID=C3C579873A1FF3A29B2414E96492CAC0");
 
         var raw = JSON.stringify({ "brand": brand, "type": type });
 
@@ -77,8 +81,8 @@ class Beer extends Component {
         fetch("https://beer-on-tap-36284.herokuapp.com/beerdata", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
-            .catch(error => console.log('error', error))
-            .then(window.location.reload());
+            .then(this.getList.bind(this))
+            .catch(error => console.log('error', error));
     }
 
     sendUpdate = () => {
@@ -86,8 +90,8 @@ class Beer extends Component {
         var type = this.state.type;
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "Basic dGVzdHVzZXI6dGVzdHBhc3N3b3Jk");
-        myHeaders.append("Cookie", "JSESSIONID=98AF4687652A48D576C268ABDAFF3E99");
+        //myHeaders.append("Authorization", "Basic dGVzdHVzZXI6dGVzdHBhc3N3b3Jk");
+        //myHeaders.append("Cookie", "JSESSIONID=98AF4687652A48D576C268ABDAFF3E99");
 
         var raw = JSON.stringify({ "brand": brand, "type": type });
 
@@ -101,7 +105,7 @@ class Beer extends Component {
         fetch("https://beer-on-tap-36284.herokuapp.com/beerdata/" + this.state.id, requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
-            .then(window.location.reload())
+            .then(this.getList.bind(this))
             .catch(error => console.log('error', error));
     }
 
